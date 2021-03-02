@@ -29,26 +29,27 @@ window.addEventListener('DOMContentLoaded', function () {
             return n;
         }
 
-        let timer = getTimeRemaining();
         function updateClock() {
+            let timer = getTimeRemaining();
             timerHours.textContent = pensil(timer.hours);
             timerMinutes.textContent = pensil(timer.minutes);
             timerSeconds.textContent = pensil(timer.seconds);
 
             timerDay.textContent = 'До конца акции осталось ' + timer.day + ' дней';
+            if (timer.timeRemaining <= 0) {
+                clearInterval(timerClock);
+                timerHours.textContent = '00';
+                timerMinutes.textContent = '00';
+                timerSeconds.textContent = '00';
+                timerDay.textContent = 'Акция  завершена';
+            }
         }
         updateClock();
 
-
-
-        const timerClock = setInterval(updateClock => {
-            if (timer.timeRemaining <= 1) {
-                clearInterval(timerClock);
-            }
-        }, 1000);
+        let timerClock = setInterval(updateClock, 1000);
 
     }
-    countTimer('31 december 2021, 00:00:00');
+    countTimer('04 march 2021, 00:47:00');
 });
-
+//'timerClock' was used before it was defined. (W003)",jshint [48,13]
 
