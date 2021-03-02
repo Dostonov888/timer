@@ -1,5 +1,3 @@
-
-
 window.addEventListener('DOMContentLoaded', function () {
     'use strict';
     //timer
@@ -18,9 +16,15 @@ window.addEventListener('DOMContentLoaded', function () {
                 hours = Math.floor(timeRemaining / 60 / 60),
                 day = Math.floor(timeRemaining / 60 / 60 / 24);
 
-            return { timeRemaining, day, hours, minutes, seconds };
+            return {
+                timeRemaining,
+                day,
+                hours,
+                minutes,
+                seconds
+            };
         }
-
+        let timerId = setInterval(updateClock, 1000);
         function updateClock() {
             let timer = getTimeRemaining();
 
@@ -30,13 +34,13 @@ window.addEventListener('DOMContentLoaded', function () {
 
             timerDay.textContent = 'До конца акции осталось ' + timer.day + ' дней';
             if (timer.timeRemaining <= 0) {
-                clearInterval(1);
+                clearInterval(timerId);
             }
 
         }
         updateClock();
 
-        setInterval(updateClock, 1000);
+
     }
     countTimer('31 december 2021,00:00:00');
 
@@ -51,17 +55,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
         const handlerMenu = () => {
             if (!menu.style.transform || menu.style.transform === `transform()`) {
-                //     menu.style.animate([
-                //         { transform: `translate(0)` }
-                //         { transform: `translate(100)` }
-                //     ], {
-                //         dutation: 1000,
-                //         iterations: Infinity
-                //     });
 
-                // } else {
-                //     menu.style.transform = `translate(-100%)`;
-                // }
                 menu.classList.toggle('active-menu');
             }
         };
@@ -78,18 +72,18 @@ window.addEventListener('DOMContentLoaded', function () {
 
     //popup
     const togglePopUp = () => {
-        const popup = document.querySelector('.popup'),
+        const popUp = document.querySelector('.popup'),
             popupBtn = document.querySelectorAll('.popup-btn'),
-            popUpClose = document.querySelector('.popup-close'),
+
             popupContent = document.querySelector('.popup-content');
         popupBtn.forEach((elem) => {
             elem.addEventListener('click', () => {
                 if (screen.width < 768) {
-                    popup.style.display = 'block';
+                    popUp.style.display = 'block';
                 } else {
                     let count = 0;
                     let popTimer = setInterval(function () {
-                        popup.style.display = 'block';
+                        popUp.style.display = 'block';
                         count += 5;
                         popupContent.style.left = count + "px";
                         let center = (document.documentElement.clientWidth / 2) - (popupContent.offsetWidth / 2);
@@ -102,12 +96,51 @@ window.addEventListener('DOMContentLoaded', function () {
             });
         });
 
-        popUpClose.addEventListener('click', () => {
-            popup.style.display = 'none';
+
+
+        popUp.addEventListener('click', (event) => {
+            let target = event.target;
+            if (target.classList.contains('popup-close')) {
+                popUp.style.display = 'none';
+            } else {
+                target = target.closest('.popup-content');
+
+                if (!target) {
+                    popUp.style.display = 'none';
+                }
+
+            }
+
         });
     };
     togglePopUp();
+    //tab
+    const tabs = () => {
+        const tabHeader = document.querySelector('.service-header'),
+            tab = tabHeader.querySelectorAll('.service-header-tab'),
+            tabContent = document.querySelectorAll('.service-tab');
+        const toggleTabContent = (index) => {
+            for (let i = 0; i < tabContent.length; i++) {
+                if (index === i) {
+                    tab[i].classList.add('active');
+                    tabContent[i].classList.remove('d-none');
+                } else {
+                    tabContent[i].classList.add('d-none');
+                    tabContent[i].classList.remove('d-none');
+                }
+            }
+        };
+
+        tabHeader.addEventListener('click', (event) => {
+            let target = event.target;
+            target = target.closest('.service-header-tab');
+
+            tab.forEach((item, i) => {
+                if (item === target) {
+                    toggleTabContent(i);
+                }
+            });
+        });
+    };
 
 });
-
-
