@@ -29,7 +29,7 @@ window.addEventListener('DOMContentLoaded', function () {
             if (n < 10) { return '0' + n; }
             return n;
         }
-
+        let timerClock;
         function updateClock() {
             let timer = getTimeRemaining();
             timerHours.textContent = pensil(timer.hours);
@@ -47,7 +47,7 @@ window.addEventListener('DOMContentLoaded', function () {
         }
         updateClock();
 
-        let timerClock = setInterval(updateClock, 1000);
+        timerClock = setInterval(updateClock, 1000);
     }
     countTimer('31 december 2021,00:00:00');
 
