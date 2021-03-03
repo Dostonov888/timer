@@ -13,7 +13,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 timeRemaining = (dateStop - dateNow) / 1000,
                 seconds = Math.floor(timeRemaining % 60),
                 minutes = Math.floor((timeRemaining / 60) % 60),
-                hours = Math.floor(timeRemaining / 60 / 60),
+                hours = Math.floor(timeRemaining / 60 / 60 % 24),
                 day = Math.floor(timeRemaining / 60 / 60 / 24);
 
             return {
@@ -24,23 +24,30 @@ window.addEventListener('DOMContentLoaded', function () {
                 seconds
             };
         }
-        let timerId = setInterval(updateClock, 1000);
+
+        function pensil(n) {
+            if (n < 10) { return '0' + n; }
+            return n;
+        }
+
         function updateClock() {
             let timer = getTimeRemaining();
-
-            timerHours.textContent = ('0' + timer.hours).slice(-2);
-            timerMinutes.textContent = ('0' + timer.minutes).slice(-2);
-            timerSeconds.textContent = ('0' + timer.seconds).slice(-2);
-
+            timerHours.textContent = pensil(timer.hours);
+            timerMinutes.textContent = pensil(timer.minutes);
+            timerSeconds.textContent = pensil(timer.seconds);
             timerDay.textContent = 'До конца акции осталось ' + timer.day + ' дней';
             if (timer.timeRemaining <= 0) {
-                clearInterval(timerId);
+                clearInterval(timerClock);
+                timerHours.textContent = '00';
+                timerMinutes.textContent = '00';
+                timerSeconds.textContent = '00';
+                timerDay.textContent = 'Акция  завершена';
             }
 
         }
         updateClock();
 
-
+        let timerClock = setInterval(updateClock, 1000);
     }
     countTimer('31 december 2021,00:00:00');
 
