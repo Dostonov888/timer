@@ -95,7 +95,6 @@ window.addEventListener('DOMContentLoaded', function () {
                             clearInterval(popTimer);
                         }
                     }, 5);
-                    console.log(popTimer);
                 }
             });
         });
@@ -129,8 +128,8 @@ window.addEventListener('DOMContentLoaded', function () {
                     tab[i].classList.add('active');
                     tabContent[i].classList.remove('d-none');
                 } else {
+                    tab[i].classList.remove('active');
                     tabContent[i].classList.add('d-none');
-                    tabContent[i].classList.remove('d-none');
                 }
             }
         };
@@ -139,12 +138,16 @@ window.addEventListener('DOMContentLoaded', function () {
             let target = event.target;
             target = target.closest('.service-header-tab');
 
-            tab.forEach((item, i) => {
-                if (item === target) {
-                    toggleTabContent(i);
-                }
-            });
+            if (target) {
+
+                tab.forEach((item, i) => {
+                    if (item === target) {
+                        toggleTabContent(i);
+                    }
+                });
+            }
         });
     };
+    tabs();
 
 });
