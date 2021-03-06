@@ -95,7 +95,6 @@ window.addEventListener('DOMContentLoaded', function () {
                             clearInterval(popTimer);
                         }
                     }, 5);
-                    console.log(popTimer);
                 }
             });
         });
@@ -129,8 +128,8 @@ window.addEventListener('DOMContentLoaded', function () {
                     tab[i].classList.add('active');
                     tabContent[i].classList.remove('d-none');
                 } else {
+                    tab[i].classList.remove('active');
                     tabContent[i].classList.add('d-none');
-                    tabContent[i].classList.remove('d-none');
                 }
             }
         };
@@ -138,21 +137,38 @@ window.addEventListener('DOMContentLoaded', function () {
         tabHeader.addEventListener('click', (event) => {
             let target = event.target;
             target = target.closest('.service-header-tab');
-
-            tab.forEach((item, i) => {
-                if (item === target) {
-                    toggleTabContent(i);
-                }
-            });
+            if (target) {
+                tab.forEach((item, i) => {
+                    if (item === target) {
+                        toggleTabContent(i);
+                    }
+                });
+            }
         });
     };
     tabs();
 
     //slider
     const slider = () => {
-        const slide = document.querySelectorAll('.portfolio-item'),
-            btn = document.querySelectorAll('.portfolio-btn'),
-            dot = document.querySelectorAll('.dot'),
+        const slide = document.querySelectorAll('.portfolio-item');
+
+        const addDot = () => {
+            const portfolioDots = document.querySelector('portfolio-dots');
+            for (let i = 0; i < slide.length; i++) {
+                let li = document.createElement('li');
+                li.className = 'dot';
+
+                for (let i = 0; i < li.length; i++) {
+                    li[i].className = li[i].className.addClass('.dot-active', '');
+                }
+                document.body.portfolioDots.append(li);
+            }
+        };
+
+
+
+        const btn = document.querySelectorAll('.portfolio-btn'),
+            dot = addDot(),
             slider = document.querySelector('.portfolio-content');
 
         let currentSlide = 0,
@@ -163,7 +179,7 @@ window.addEventListener('DOMContentLoaded', function () {
         };
 
         const nextSlide = (elem, index, strClass) => {
-            elem[index].classList.remove(strClass);
+            elem[index].classList.add(strClass);
         };
 
 
@@ -196,6 +212,8 @@ window.addEventListener('DOMContentLoaded', function () {
 
             if (target.matches('#arrow-right')) {
                 currentSlide++;
+            } else if (target.matches('#arrow-left')) {
+                currentSlide--;
             } else if (target.matches('.dot')) {
                 dot.forEach((elem, index) => {
                     if (elem === target) {
