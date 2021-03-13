@@ -252,5 +252,115 @@ window.addEventListener('DOMContentLoaded', function () {
     };
     slider();
 
+    const team = () => {
+        const link = document.querySelectorAll(".description"),
+            img = document.querySelectorAll(".command__photo");
+        img[0].addEventListener('mouseover', (event) => {
+            event.target.src = event.target.dataset.img;
+            link[0].textContent = 'Артем Исламов';
+        });
+        img[0].addEventListener('mouseout', (event) => {
+            event.target.src = event.target.src = 'images/command/command-1.jpg';
+            link[0].textContent = 'Quentin Tarantino';
+        });
+        img[1].addEventListener('mouseover', (event) => {
+            event.target.src = event.target.dataset.img;
+            link[1].textContent = 'Дарья Петрова';
+        });
+        img[1].addEventListener('mouseout', (event) => {
+            event.target.src = event.target.src = 'images/command/command-2.jpg';
+            link[1].textContent = 'Parker Posey';
+        });
+        img[2].addEventListener('mouseover', (event) => {
+            event.target.src = event.target.dataset.img;
+            link[2].textContent = 'Сергей Кислов';
+        });
+        img[2].addEventListener('mouseout', (event) => {
+            event.target.src = event.target.src = 'images/command/command-3.jpg';
+            link[2].textContent = 'Gonzalo Higuaín';
+        });
+        img[3].addEventListener('mouseover', (event) => {
+            event.target.src = event.target.dataset.img;
+            link[3].textContent = 'Владимир Янковский';
+        });
+        img[3].addEventListener('mouseout', (event) => {
+            event.target.src = event.target.src = 'images/command/command-4.jpg';
+            link[3].textContent = 'Liam Payne';
+        });
+        img[4].addEventListener('mouseover', (event) => {
+            event.target.src = event.target.dataset.img;
+            link[4].textContent = 'Екатерина Чазова';
+        });
+        img[4].addEventListener('mouseout', (event) => {
+            event.target.src = event.target.src = 'images/command/command-5.jpg';
+            link[4].textContent = 'Bristol Palin';
+        });
+        img[5].addEventListener('mouseover', (event) => {
+            event.target.src = event.target.dataset.img;
+            link[5].textContent = 'Максим Лескин';
+        });
+        img[5].addEventListener('mouseout', (event) => {
+            event.target.src = event.target.src = 'images/command/command-6.jpg';
+            link[5].textContent = 'Dominic Monaghan';
+        });
+    };
+    team();
+
+    const calc = () => {
+        let calcSquare = document.querySelector('.calc-square'),
+            calcCount = document.querySelector('.calc-count'),
+            calcDay = document.querySelector('.calc-day');
+
+        calcSquare.addEventListener('input', () => {
+
+            if (calcSquare.value.match(/[^0-9]/g)) {
+                calcSquare.value = calcSquare.value.replace(/[^0-9]/g, '');
+            }
+        });
+        calcCount.addEventListener('input', () => {
+
+            if (calcCount.value.match(/[^0-9]/g)) {
+                calcCount.value = calcCount.value.replace(/[^0-9]/g, '');
+            }
+        });
+        calcDay.addEventListener('input', () => {
+
+            if (calcDay.value.match(/[^0-9]/g)) {
+                calcDay.value = calcDay.value.replace(/[^0-9]/g, '');
+            }
+        });
+
+    };
+    calc();
+
+    const formCont = () => {
+        let form2Name = document.getElementById('form2-name'),
+            form2email = document.getElementById('form2-email'),
+            form2phone = document.getElementById('form2-phone'),
+            form2message = document.getElementById('form2-message');
+
+        form2Name.addEventListener('input', () => {
+            if (form2Name.value.match(/[^а-яА-Я -\s]/gi)) {
+                form2Name.value = form2Name.value.replace(/[^а-яА-Я -\s]/gi, '');
+            }
+        });
+        form2message.addEventListener('input', () => {
+            if (form2message.value.match(/[^а-яА-Я -\s]/gi)) {
+                form2message.value = form2message.value.replace(/[^а-яА-Я -\s]/gi, '');
+            }
+        });
+        form2email.addEventListener('input', () => {
+            if (form2email.value.match(/\w+@\w+\.\w[2,3]/gi)) {
+                form2email.value = form2email.value.replace(/\w+@\w+\.\w[2,3]/gi, '');
+            }
+        });
+        form2phone.addEventListener('input', () => {
+            if (form2phone.value.match(/\+?[78](-*\d){10/)) {
+                form2phone.value = form2phone.value.replace(/\+?[78](-*\d){10/g, '');
+            }
+        });
+
+    };
+    formCont();
 
 });
