@@ -340,27 +340,39 @@ window.addEventListener('DOMContentLoaded', function () {
             form2message = document.getElementById('form2-message');
 
         form2Name.addEventListener('input', () => {
-            if (form2Name.value.match(/[^а-яА-Я -\s]/gi)) {
-                form2Name.value = form2Name.value.replace(/[^а-яА-Я -\s]/gi, '');
-            }
-        });
-        form2message.addEventListener('input', () => {
-            if (form2message.value.match(/[^а-яА-Я -\s]/gi)) {
-                form2message.value = form2message.value.replace(/[^а-яА-Я -\s]/gi, '');
-            }
-        });
-        form2email.addEventListener('input', () => {
-            if (form2email.value.match(/\w+@\w+\.\w[2,3]/gi)) {
-                form2email.value = form2email.value.replace(/\w+@\w+\.\w[2,3]/gi, '');
-            }
-        });
-        form2phone.addEventListener('input', () => {
-            if (form2phone.value.match(/\+?[78](-*\d){10/)) {
-                form2phone.value = form2phone.value.replace(/\+?[78](-*\d){10/g, '');
-            }
+            form2Name.value.match(/[а-яa-z ]/gi);
+            form2Name.value = form2Name.value.replace(/[^а-яa-z ]/gi, '');
+            form2Name.onblur = () => {
+                form2Name.value = form2Name.value.replace(/(\s|^)([a-z])/gi, (a) => a.toUpperCase());
+
+            };
         });
 
+
+
+        form2message.addEventListener('input', () => {
+            form2message.value.match(/[а-яa-z -\s]/gi);
+            form2message.value = form2message.value.replace(/[^а-яА-Я -\s]/gi, '');
+
+        });
+        form2email.addEventListener('input', () => {
+            form2email.value.match(/\w+@\w+\.\w{2,3}/gi);
+            form2email.value = form2email.value.replace(/[а-я]/gi, '');
+            form2email.onblur = () => {
+                if (!form2email.value.includes('@')) {
+                    alert('Введите правильный email.');
+                    form2email.value = '';
+                }
+            };
+
+        });
+        form2phone.addEventListener('input', () => {
+            form2phone.value.match(/\+?[78]([-()]*\d){10}/g);
+            form2phone.value = form2phone.value.replace(/([^-()\+])(\D)/g, '');
+
+        });
     };
     formCont();
+
 
 });
