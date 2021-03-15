@@ -306,32 +306,32 @@ window.addEventListener('DOMContentLoaded', function () {
     };
     team();
 
-    // const calc1 = () => {
-    //     let calcSquare = document.querySelector('.calc-square'),
-    //         calcCount = document.querySelector('.calc-count'),
-    //         calcDay = document.querySelector('.calc-day');
+    const calc1 = () => {
+        let calcSquare = document.querySelector('.calc-square'),
+            calcCount = document.querySelector('.calc-count'),
+            calcDay = document.querySelector('.calc-day');
 
-    //     calcSquare.addEventListener('input', () => {
+        calcSquare.addEventListener('input', () => {
 
-    //         if (calcSquare.value.match(/[^0-9]/g)) {
-    //             calcSquare.value = calcSquare.value.replace(/[^0-9]/g, '');
-    //         }
-    //     });
-    //     calcCount.addEventListener('input', () => {
+            if (calcSquare.value.match(/[^0-9]/g)) {
+                calcSquare.value = calcSquare.value.replace(/[^0-9]/g, '');
+            }
+        });
+        calcCount.addEventListener('input', () => {
 
-    //         if (calcCount.value.match(/[^0-9]/g)) {
-    //             calcCount.value = calcCount.value.replace(/[^0-9]/g, '');
-    //         }
-    //     });
-    //     calcDay.addEventListener('input', () => {
+            if (calcCount.value.match(/[^0-9]/g)) {
+                calcCount.value = calcCount.value.replace(/[^0-9]/g, '');
+            }
+        });
+        calcDay.addEventListener('input', () => {
 
-    //         if (calcDay.value.match(/[^0-9]/g)) {
-    //             calcDay.value = calcDay.value.replace(/[^0-9]/g, '');
-    //         }
-    //     });
+            if (calcDay.value.match(/[^0-9]/g)) {
+                calcDay.value = calcDay.value.replace(/[^0-9]/g, '');
+            }
+        });
 
-    // };
-    // calc1();
+    };
+    calc1();
 
     const formCont = () => {
         let form2Name = document.getElementById('form2-name'),
@@ -415,7 +415,7 @@ window.addEventListener('DOMContentLoaded', function () {
             }
         });
     };
-    calc();
+    calc(10);
 
 
 });
