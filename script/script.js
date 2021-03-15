@@ -306,32 +306,32 @@ window.addEventListener('DOMContentLoaded', function () {
     };
     team();
 
-    const calc = () => {
-        let calcSquare = document.querySelector('.calc-square'),
-            calcCount = document.querySelector('.calc-count'),
-            calcDay = document.querySelector('.calc-day');
+    // const calc1 = () => {
+    //     let calcSquare = document.querySelector('.calc-square'),
+    //         calcCount = document.querySelector('.calc-count'),
+    //         calcDay = document.querySelector('.calc-day');
 
-        calcSquare.addEventListener('input', () => {
+    //     calcSquare.addEventListener('input', () => {
 
-            if (calcSquare.value.match(/[^0-9]/g)) {
-                calcSquare.value = calcSquare.value.replace(/[^0-9]/g, '');
-            }
-        });
-        calcCount.addEventListener('input', () => {
+    //         if (calcSquare.value.match(/[^0-9]/g)) {
+    //             calcSquare.value = calcSquare.value.replace(/[^0-9]/g, '');
+    //         }
+    //     });
+    //     calcCount.addEventListener('input', () => {
 
-            if (calcCount.value.match(/[^0-9]/g)) {
-                calcCount.value = calcCount.value.replace(/[^0-9]/g, '');
-            }
-        });
-        calcDay.addEventListener('input', () => {
+    //         if (calcCount.value.match(/[^0-9]/g)) {
+    //             calcCount.value = calcCount.value.replace(/[^0-9]/g, '');
+    //         }
+    //     });
+    //     calcDay.addEventListener('input', () => {
 
-            if (calcDay.value.match(/[^0-9]/g)) {
-                calcDay.value = calcDay.value.replace(/[^0-9]/g, '');
-            }
-        });
+    //         if (calcDay.value.match(/[^0-9]/g)) {
+    //             calcDay.value = calcDay.value.replace(/[^0-9]/g, '');
+    //         }
+    //     });
 
-    };
-    calc();
+    // };
+    // calc1();
 
     const formCont = () => {
         let form2Name = document.getElementById('form2-name'),
@@ -373,6 +373,49 @@ window.addEventListener('DOMContentLoaded', function () {
         });
     };
     formCont();
+
+    const calc = (price = 100) => {
+
+        const calcBlock = document.querySelector('.calc-block'),
+            calcType = document.querySelector('.calc-type'),
+            calcSquare = document.querySelector('.calc-square'),
+            calcDay = document.querySelector('.calc-day'),
+            calcCount = document.querySelector('.calc-count'),
+            totalValue = document.getElementById('total');
+
+
+        const countSum = () => {
+            let total = 0,
+                countValue = 1,
+                dayValue = 1;
+
+            const typeValue = calcType.options[calcType.selectedIndex].value,
+                squareValue = +calcSquare.value;
+
+
+            if (calcCount.value > 1) {
+                countValue += (calcCount.value - 1) / 10;
+            }
+            if (calcDay.value && calcDay.value < 5) {
+                dayValue *= 2;
+            } else if (calcDay.value && calcDay.value < 10) {
+                dayValue *= 1.5;
+            }
+            if (typeValue && squareValue) {
+                total = price * typeValue * squareValue * countValue * dayValue;
+            }
+
+            totalValue.textContent = total;
+        };
+
+        calcBlock.addEventListener('change', (event) => {
+            const target = event.target;
+            if (target.matches('select') || target.matches('input')) {
+                countSum();
+            }
+        });
+    };
+    calc();
 
 
 });
