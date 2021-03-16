@@ -270,96 +270,63 @@ window.addEventListener('DOMContentLoaded', function () {
 
 
 
-    let cal = document.getElementById('calc'),
+    let cal = document.querySelector('.calc-block'),
         calcItem = document.querySelectorAll('.calc-item');
 
     cal.addEventListener('input', (event) => {
         let target = event.target;
-        calcItem.forEach((item) => {
-            let calcText = item.value;
-            if (target === item) {
-                calcText.value.match(/^\d+$/g);
-                calcText.value = calcText.value.replace(/^\D+$/gi, '');
-            }
-            console.log(target);
-        });
+        if (target.matches('input')) {
+            target.value = target.value.replace(/^\D+$/gi, '');
+        }
     });
 
+    let inPut = document.querySelectorAll("[name = 'user_name']");
+    inPut.forEach(item => {
+        item.addEventListener('input', event => {
 
-
-    // calcCount.addEventListener('input', () => {
-
-    //     if (calcCount.value.match(/[^0-9]/g)) {
-    //         calcCount.value = calcCount.value.replace(/[^0-9]/g, '');
-    //     }
-    // });
-    // calcDay.addEventListener('input', () => {
-
-    //     if (calcDay.value.match(/[^0-9]/g)) {
-    //         calcDay.value = calcDay.value.replace(/[^0-9]/g, '');
-    //     }
-    // });
-
-    let inPut = document.querySelectorAll('input');
-    console.log(inPut);
-    let formName = document.querySelectorAll('.form-name');
-    inPut.addEventListener('input', (event) => {
-        let target = event.target;
-        formName.forEach((item) => {
-            let nameText = item.value;
+            let target = event.target;
             if (target === item) {
-                formName.value.match(/[а-я -]/gi);
-                formName.value = formName.value.replace(/[^а-я -]/gi, '');
-                formName.onblur = () => {
-                    formName.value = formName.value.replace(/(\s|^)([a-z])/gi, (a) => a.toUpperCase());
+                target.value.match(/[а-я -]/gi);
+                target.value = target.value.replace(/[^а-я -]/gi, '');
+                target.onblur = () => {
+                    target.value = target.value.replace(/(\s|^)([a-z])/gi, (a) => a.toUpperCase());
                 };
             }
         });
+    });
+    let userEmail = document.querySelectorAll("[name = 'user_email']");
+    userEmail.forEach(item => {
+        item.addEventListener('input', event => {
 
+            let target = event.target;
+            if (target === item) {
+                target.value.match(/[^a-z@-_.!~*']/gi);
+                target.value = target.value.replace(/[а-я]/gi, '');
+                target.onblur = () => {
+                    if (!target.value.includes('@')) {
+                        target.value = '';
+                    }
+                };
+            }
+        });
+    });
+    let userPhone = document.querySelectorAll("[name = 'user_phone']");
+    userPhone.forEach(item => {
+        item.addEventListener('input', event => {
+
+            let target = event.target;
+            if (target === item) {
+                target.value.match(/(\[^\d()-])/g);
+                target.value = target.value.replace(/([^-()\+])([- ]{1,})(\D)/g, '');
+            }
+        });
+    });
+    let form2message = document.getElementById('form2-message');
+    form2message.addEventListener('input', () => {
+        form2message.value.match(/[а-яa-z -\s]/gi);
+        form2message.value = form2message.value.replace(/[^а-яА-Я -\s]/gi, '');
 
     });
-
-
-
-    const formCont = () => {
-        let form2Name = document.getElementById('form2-name'),
-            form2email = document.getElementById('form2-email'),
-            form2phone = document.getElementById('form2-phone'),
-            form2message = document.getElementById('form2-message');
-
-        // form2Name.addEventListener('input', () => {
-        //     form2Name.value.match(/[а-я -]/gi);
-        //     form2Name.value = form2Name.value.replace(/[^а-я -]/gi, '');
-        //     form2Name.onblur = () => {
-        //         form2Name.value = form2Name.value.replace(/(\s|^)([a-z])/gi, (a) => a.toUpperCase());
-
-        //     };
-        // });
-
-
-
-        form2message.addEventListener('input', () => {
-            form2message.value.match(/[а-яa-z -\s]/gi);
-            form2message.value = form2message.value.replace(/[^а-яА-Я -\s]/gi, '');
-
-        });
-        form2email.addEventListener('input', () => {
-            form2email.value.match(/[^a-z@-_.!~*']/gi);
-            form2email.value = form2email.value.replace(/[а-я]/gi, '');
-            form2email.onblur = () => {
-                if (!form2email.value.includes('@')) {
-                    form2email.value = '';
-                }
-            };
-
-        });
-        form2phone.addEventListener('input', () => {
-            form2phone.value.match(/\+?[78]([-()]*\d){10}/g);
-            form2phone.value = form2phone.value.replace(/([^-()\+])(\D)/g, '');
-
-        });
-    };
-    formCont();
 
     const calc = (price = 100) => {
 
