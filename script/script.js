@@ -158,9 +158,6 @@ window.addEventListener('DOMContentLoaded', function () {
                 let li = document.createElement('li');
                 li.className = 'dot';
 
-                // for (let i = 0; i < li.length; i++) {
-                //     li[i].className = li[i].className.addClass('.dot-active', '');
-                // }
                 if (i === 0) {
                     li.classList.add('dot-active');
                 }
@@ -253,85 +250,76 @@ window.addEventListener('DOMContentLoaded', function () {
     slider();
 
     const team = () => {
-        const link = document.querySelectorAll(".description"),
-            img = document.querySelectorAll(".command__photo");
-        img[0].addEventListener('mouseover', (event) => {
-            event.target.src = event.target.dataset.img;
-            link[0].textContent = 'Артем Исламов';
-        });
-        img[0].addEventListener('mouseout', (event) => {
-            event.target.src = event.target.src = 'images/command/command-1.jpg';
-            link[0].textContent = 'Quentin Tarantino';
-        });
-        img[1].addEventListener('mouseover', (event) => {
-            event.target.src = event.target.dataset.img;
-            link[1].textContent = 'Дарья Петрова';
-        });
-        img[1].addEventListener('mouseout', (event) => {
-            event.target.src = event.target.src = 'images/command/command-2.jpg';
-            link[1].textContent = 'Parker Posey';
-        });
-        img[2].addEventListener('mouseover', (event) => {
-            event.target.src = event.target.dataset.img;
-            link[2].textContent = 'Сергей Кислов';
-        });
-        img[2].addEventListener('mouseout', (event) => {
-            event.target.src = event.target.src = 'images/command/command-3.jpg';
-            link[2].textContent = 'Gonzalo Higuaín';
-        });
-        img[3].addEventListener('mouseover', (event) => {
-            event.target.src = event.target.dataset.img;
-            link[3].textContent = 'Владимир Янковский';
-        });
-        img[3].addEventListener('mouseout', (event) => {
-            event.target.src = event.target.src = 'images/command/command-4.jpg';
-            link[3].textContent = 'Liam Payne';
-        });
-        img[4].addEventListener('mouseover', (event) => {
-            event.target.src = event.target.dataset.img;
-            link[4].textContent = 'Екатерина Чазова';
-        });
-        img[4].addEventListener('mouseout', (event) => {
-            event.target.src = event.target.src = 'images/command/command-5.jpg';
-            link[4].textContent = 'Bristol Palin';
-        });
-        img[5].addEventListener('mouseover', (event) => {
-            event.target.src = event.target.dataset.img;
-            link[5].textContent = 'Максим Лескин';
-        });
-        img[5].addEventListener('mouseout', (event) => {
-            event.target.src = event.target.src = 'images/command/command-6.jpg';
-            link[5].textContent = 'Dominic Monaghan';
+        const link = document.querySelector('.command'),
+            img = document.querySelectorAll('.command__photo');
+        link.addEventListener('mouseover', (event) => {
+            let target = event.target;
+            img.forEach((item) => {
+                let imgSrc = item.src;
+                if (target === item) {
+                    item.src = item.dataset.img;
+                    item.addEventListener('mouseout', () => {
+                        item.src = imgSrc;
+                    });
+                }
+            });
         });
     };
     team();
 
-    const calc1 = () => {
-        let calcSquare = document.querySelector('.calc-square'),
-            calcCount = document.querySelector('.calc-count'),
-            calcDay = document.querySelector('.calc-day');
 
-        calcSquare.addEventListener('input', () => {
 
-            if (calcSquare.value.match(/[^0-9]/g)) {
-                calcSquare.value = calcSquare.value.replace(/[^0-9]/g, '');
+
+    let cal = document.getElementById('calc'),
+        calcItem = document.querySelectorAll('.calc-item');
+
+    cal.addEventListener('input', (event) => {
+        let target = event.target;
+        calcItem.forEach((item) => {
+            let calcText = item.value;
+            if (target === item) {
+                calcText.value.match(/^\d+$/g);
+                calcText.value = calcText.value.replace(/^\D+$/gi, '');
+            }
+            console.log(target);
+        });
+    });
+
+
+
+    // calcCount.addEventListener('input', () => {
+
+    //     if (calcCount.value.match(/[^0-9]/g)) {
+    //         calcCount.value = calcCount.value.replace(/[^0-9]/g, '');
+    //     }
+    // });
+    // calcDay.addEventListener('input', () => {
+
+    //     if (calcDay.value.match(/[^0-9]/g)) {
+    //         calcDay.value = calcDay.value.replace(/[^0-9]/g, '');
+    //     }
+    // });
+
+    let inPut = document.querySelectorAll('input');
+    console.log(inPut);
+    let formName = document.querySelectorAll('.form-name');
+    inPut.addEventListener('input', (event) => {
+        let target = event.target;
+        formName.forEach((item) => {
+            let nameText = item.value;
+            if (target === item) {
+                formName.value.match(/[а-я -]/gi);
+                formName.value = formName.value.replace(/[^а-я -]/gi, '');
+                formName.onblur = () => {
+                    formName.value = formName.value.replace(/(\s|^)([a-z])/gi, (a) => a.toUpperCase());
+                };
             }
         });
-        calcCount.addEventListener('input', () => {
 
-            if (calcCount.value.match(/[^0-9]/g)) {
-                calcCount.value = calcCount.value.replace(/[^0-9]/g, '');
-            }
-        });
-        calcDay.addEventListener('input', () => {
 
-            if (calcDay.value.match(/[^0-9]/g)) {
-                calcDay.value = calcDay.value.replace(/[^0-9]/g, '');
-            }
-        });
+    });
 
-    };
-    calc1();
+
 
     const formCont = () => {
         let form2Name = document.getElementById('form2-name'),
@@ -339,14 +327,14 @@ window.addEventListener('DOMContentLoaded', function () {
             form2phone = document.getElementById('form2-phone'),
             form2message = document.getElementById('form2-message');
 
-        form2Name.addEventListener('input', () => {
-            form2Name.value.match(/[а-яa-z ]/gi);
-            form2Name.value = form2Name.value.replace(/[^а-яa-z ]/gi, '');
-            form2Name.onblur = () => {
-                form2Name.value = form2Name.value.replace(/(\s|^)([a-z])/gi, (a) => a.toUpperCase());
+        // form2Name.addEventListener('input', () => {
+        //     form2Name.value.match(/[а-я -]/gi);
+        //     form2Name.value = form2Name.value.replace(/[^а-я -]/gi, '');
+        //     form2Name.onblur = () => {
+        //         form2Name.value = form2Name.value.replace(/(\s|^)([a-z])/gi, (a) => a.toUpperCase());
 
-            };
-        });
+        //     };
+        // });
 
 
 
@@ -356,11 +344,10 @@ window.addEventListener('DOMContentLoaded', function () {
 
         });
         form2email.addEventListener('input', () => {
-            form2email.value.match(/\w+@\w+\.\w{2,3}/gi);
+            form2email.value.match(/[^a-z@-_.!~*']/gi);
             form2email.value = form2email.value.replace(/[а-я]/gi, '');
             form2email.onblur = () => {
                 if (!form2email.value.includes('@')) {
-                    alert('Введите правильный email.');
                     form2email.value = '';
                 }
             };
