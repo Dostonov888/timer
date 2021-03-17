@@ -286,10 +286,11 @@ window.addEventListener('DOMContentLoaded', function () {
 
             let target = event.target;
             if (target === item) {
-                target.value.match(/[а-я -]/gi);
-                target.value = target.value.replace(/[^а-я -]/gi, '');
+                target.value.match(/[а-я]/gi);
+                target.value = target.value.replace(/[^а-я][\s-]{1,}/gi, '');
                 target.onblur = () => {
-                    target.value = target.value.replace(/(\s|^)([a-z])/gi, (a) => a.toUpperCase());
+                    target.value = target.value.trim();
+                    target.value = target.value.replace(/(\s|^)([а-я])/gi, (a) => a.toUpperCase());
                 };
             }
         });
@@ -301,8 +302,9 @@ window.addEventListener('DOMContentLoaded', function () {
             let target = event.target;
             if (target === item) {
                 target.value.match(/[^a-z@-_.!~*']/gi);
-                target.value = target.value.replace(/[а-я]/gi, '');
+                target.value = target.value.replace(/[а-я][\s-]{1,}/gi, '');
                 target.onblur = () => {
+                    target.value = target.value.trim();
                     if (!target.value.includes('@')) {
                         target.value = '';
                     }
@@ -317,7 +319,7 @@ window.addEventListener('DOMContentLoaded', function () {
             let target = event.target;
             if (target === item) {
                 target.value.match(/(\[^\d()-])/g);
-                target.value = target.value.replace(/([^-()\+])([- ]{1,})(\D)/g, '');
+                target.value = target.value.replace(/[^-()\+][\s-]{1,}(\D)/g, '');
             }
         });
     });
