@@ -267,111 +267,122 @@ window.addEventListener('DOMContentLoaded', function () {
     };
     team();
 
+    const calculFunc = () => {
+        let cal = document.querySelector('.calc-block'),
+            calcItem = document.querySelectorAll('.calc-item');
 
-
-
-    let cal = document.querySelector('.calc-block'),
-        calcItem = document.querySelectorAll('.calc-item');
-
-    cal.addEventListener('input', (event) => {
-        let target = event.target;
-        if (target.matches('input')) {
-            target.value = target.value.replace(/^\D+$/gi, '');
-        }
-    });
-
-    let inPut = document.querySelectorAll("[name = 'user_name']");
-    inPut.forEach(item => {
-        item.addEventListener('input', event => {
-
+        cal.addEventListener('input', (event) => {
             let target = event.target;
-            if (target === item) {
-                target.value.match(/[а-я]/gi);
-                target.value = target.value.replace(/[^а-я][\s-]{1,}/gi, '');
-                target.onblur = () => {
-                    target.value = target.value.trim();
-                    target.value = target.value.replace(/(\s|^)([а-я])/gi, (a) => a.toUpperCase());
-                };
+            if (target.matches('input')) {
+                target.value = target.value.replace(/^\D+$/gi, '');
             }
         });
-    });
-    let userEmail = document.querySelectorAll("[name = 'user_email']");
-    userEmail.forEach(item => {
-        item.addEventListener('input', event => {
 
-            let target = event.target;
-            if (target === item) {
-                target.value.match(/[^a-z@-_.!~*']/gi);
-                target.value = target.value.replace(/[а-я][\s-]{1,}/gi, '');
-                target.onblur = () => {
-                    target.value = target.value.trim();
-                    if (!target.value.includes('@')) {
-                        target.value = '';
-                    }
-                };
-            }
-        });
-    });
-    let userPhone = document.querySelectorAll("[name = 'user_phone']");
-    userPhone.forEach(item => {
-        item.addEventListener('input', event => {
-
-            let target = event.target;
-            if (target === item) {
-                target.value.match(/(\[^\d()-])/g);
-                target.value = target.value.replace(/[^-()\+][\s-]{1,}(\D)/g, '');
-            }
-        });
-    });
-    let form2message = document.getElementById('form2-message');
-    form2message.addEventListener('input', () => {
-        form2message.value.match(/[а-яa-z -\s]/gi);
-        form2message.value = form2message.value.replace(/[^а-яА-Я -\s]/gi, '');
-
-    });
-
-    const calc = (price = 100) => {
-
-        const calcBlock = document.querySelector('.calc-block'),
-            calcType = document.querySelector('.calc-type'),
-            calcSquare = document.querySelector('.calc-square'),
-            calcDay = document.querySelector('.calc-day'),
-            calcCount = document.querySelector('.calc-count'),
-            totalValue = document.getElementById('total');
-
-
-        const countSum = () => {
-            let total = 0,
-                countValue = 1,
-                dayValue = 1;
-
-            const typeValue = calcType.options[calcType.selectedIndex].value,
-                squareValue = +calcSquare.value;
-
-
-            if (calcCount.value > 1) {
-                countValue += (calcCount.value - 1) / 10;
-            }
-            if (calcDay.value && calcDay.value < 5) {
-                dayValue *= 2;
-            } else if (calcDay.value && calcDay.value < 10) {
-                dayValue *= 1.5;
-            }
-            if (typeValue && squareValue) {
-                total = price * typeValue * squareValue * countValue * dayValue;
-            }
-
-            totalValue.textContent = total;
+        const checkInputValues = target => {
+            target.value = target.value.trim();
+            target.value = target.value.replace(/-+/g, '-');
+            target.value = target.value.replace(/\s+/g, ' ');
+            target.value = target.value.replace(/^-+/g, '');
+            target.value = target.value.replace(/-+$/g, '');
         };
 
-        calcBlock.addEventListener('change', (event) => {
-            const target = event.target;
-            if (target.matches('select') || target.matches('input')) {
-                countSum();
-            }
+        let inPut = document.querySelectorAll("[name = 'user_name']");
+        inPut.forEach(item => {
+            item.addEventListener('input', event => {
+
+                let target = event.target;
+                if (target === item) {
+
+                    target.value = target.value.replace(/[^а-яё -]/gi, '');
+                    target.onblur = () => {
+                        checkInputValues(target);
+                        target.value = target.value.replace(/(\s|^)[а-яё]/gi, (a) => a.toUpperCase());
+                    };
+                }
+            });
         });
+        let userEmail = document.querySelectorAll("[name = 'user_email']");
+        userEmail.forEach(item => {
+            item.addEventListener('input', event => {
+
+                let target = event.target;
+                if (target === item) {
+
+                    target.value = target.value.replace(/[^a-z@-_.!~*']/gi, '');
+                    target.onblur = () => {
+
+                        checkInputValues(target);
+                        if (!target.value.includes('@')) {
+                            target.value = '';
+                        }
+                    };
+                }
+            });
+        });
+        let userPhone = document.querySelectorAll("[name = 'user_phone']");
+        userPhone.forEach(item => {
+            item.addEventListener('input', event => {
+
+                let target = event.target;
+                target.onblur = () => {
+                    checkInputValues(target);
+                    target.value = target.value.replace(/[^\d()-]/gi, '');
+                };
+
+            });
+        });
+        let form2message = document.getElementById('form2-message');
+        form2message.addEventListener('input', () => {
+            form2message.value.match(/[а-яa-z -\s]/gi);
+            form2message.value = form2message.value.replace(/[^а-яА-Я -\s]/gi, '');
+
+        });
+
+
+
+        const calc = (price = 100) => {
+
+            const calcBlock = document.querySelector('.calc-block'),
+                calcType = document.querySelector('.calc-type'),
+                calcSquare = document.querySelector('.calc-square'),
+                calcDay = document.querySelector('.calc-day'),
+                calcCount = document.querySelector('.calc-count'),
+                totalValue = document.getElementById('total');
+
+
+            const countSum = () => {
+                let total = 0,
+                    countValue = 1,
+                    dayValue = 1;
+
+                const typeValue = calcType.options[calcType.selectedIndex].value,
+                    squareValue = +calcSquare.value;
+
+
+                if (calcCount.value > 1) {
+                    countValue += (calcCount.value - 1) / 10;
+                }
+                if (calcDay.value && calcDay.value < 5) {
+                    dayValue *= 2;
+                } else if (calcDay.value && calcDay.value < 10) {
+                    dayValue *= 1.5;
+                }
+                if (typeValue && squareValue) {
+                    total = price * typeValue * squareValue * countValue * dayValue;
+                }
+
+                totalValue.textContent = total;
+            };
+            calcBlock.addEventListener('change', (event) => {
+                const target = event.target;
+                if (target.matches('select') || target.matches('input')) {
+                    countSum();
+                }
+            });
+        };
+        calc(10);
     };
-    calc(10);
+    calculFunc();
 
 
 });
