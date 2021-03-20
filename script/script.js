@@ -293,7 +293,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 let target = event.target;
                 if (target === item) {
 
-                    target.value = target.value.replace(/[^а-яё -]/gi, '');
+                    target.value = target.value.replace(/[^а-яё ]/gi, '');
                     target.onblur = () => {
                         checkInputValues(target);
                         target.value = target.value.replace(/(\s|^)[а-яё]/gi, (a) => a.toUpperCase());
@@ -324,7 +324,7 @@ window.addEventListener('DOMContentLoaded', function () {
             item.addEventListener('input', event => {
 
                 let target = event.target;
-                target.value = target.value.replace(/[^\d()-]/gi, '');
+                target.value = target.value.replace(/[^\d()-\+]/gi, '');
                 target.onblur = () => {
                     checkInputValues(target);
                 };
@@ -333,8 +333,8 @@ window.addEventListener('DOMContentLoaded', function () {
         });
         let form2message = document.getElementById('form2-message');
         form2message.addEventListener('input', () => {
-            form2message.value.match(/[а-яa-z -\s]/gi);
-            form2message.value = form2message.value.replace(/[^а-яА-Я -\s]/gi, '');
+            form2message.value.match(/[а-яё \d\s]/gi);
+            form2message.value = form2message.value.replace(/[a-z]/gi, '');
 
         });
 
@@ -466,7 +466,11 @@ window.addEventListener('DOMContentLoaded', function () {
             request.open('POST', './server.php');
             request.setRequestHeader('Content-Type', 'application/json');
             request.send(JSON.stringify(body));
+
         };
+        form.value = '';
+        form2.value = '';
+        form3.value = '';
 
     };
     sendForm();
