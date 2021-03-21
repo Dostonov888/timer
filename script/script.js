@@ -333,7 +333,7 @@ window.addEventListener('DOMContentLoaded', function () {
         });
         let form2message = document.getElementById('form2-message');
         form2message.addEventListener('input', () => {
-            form2message.value.match(/[а-яё \d\s]/gi);
+            form2message.value.match(/[а-яё \d\s][._^%$#!~@,-]+/gi);
             form2message.value = form2message.value.replace(/[a-z]/gi, '');
 
         });
@@ -468,9 +468,9 @@ window.addEventListener('DOMContentLoaded', function () {
             request.send(JSON.stringify(body));
 
         };
-        form.value = '';
-        form2.value = '';
-        form3.value = '';
+        form.reset();
+        form2.reset();
+        form3.reset();
 
     };
     sendForm();
