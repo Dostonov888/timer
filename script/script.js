@@ -401,72 +401,98 @@ window.addEventListener('DOMContentLoaded', function () {
         form.addEventListener('submit', (event) => {
             event.preventDefault();
             form.appendChild(statusMessage);
-            statusMessage.textContent = loadMessage;
             const formData = new FormData(form);
             let body = {};
             formData.forEach((val, key) => {
                 body[key] = val;
             });
+            statusMessage.textContent = loadMessage;
 
-            postData(body, () => {
-                statusMessage.textContent = successMessage;
-            }, (error) => {
-                statusMessage.textContent = errorMessage;
-                console.error(error);
-            });
+
+            postData(body)
+                .then((response) => {
+                    if (response.status !== 200) {
+                        throw new Error('status network not 200');
+                    }
+                    statusMessage.textContent = successMessage;
+                })
+                .catch((error) => {
+                    statusMessage.textContent = errorMessage;
+                    console.error(error);
+                });
         });
         form2.addEventListener('submit', (event) => {
             event.preventDefault();
             form2.appendChild(statusMessage);
-            statusMessage.textContent = loadMessage;
             const formData2 = new FormData(form2);
             let body2 = {};
             formData2.forEach((val, key) => {
                 body2[key] = val;
             });
-
-            postData(body2, () => {
-                statusMessage.textContent = successMessage;
-            }, (error) => {
-                statusMessage.textContent = errorMessage;
-                console.error(error);
-            });
+            statusMessage.textContent = loadMessage;
+            postData(body2)
+                .then((response) => {
+                    if (response.status !== 200) {
+                        throw new Error('status network not 200');
+                    }
+                    statusMessage.textContent = successMessage;
+                })
+                .catch((error) => {
+                    statusMessage.textContent = errorMessage;
+                    console.error(error);
+                });
         });
         form3.addEventListener('submit', (event) => {
             event.preventDefault();
-            form3.appendChild(statusMessage);
             statusMessage.textContent = loadMessage;
             const formData3 = new FormData(form3);
             let body3 = {};
             formData3.forEach((val, key) => {
                 body3[key] = val;
             });
-
-            postData(body3, () => {
-                statusMessage.textContent = successMessage;
-            }, (error) => {
-                statusMessage.textContent = errorMessage;
-                console.error(error);
-            });
+            form3.appendChild(statusMessage);
+            postData(body3)
+                .then((response) => {
+                    if (response.status !== 200) {
+                        throw new Error('status network not 200');
+                    }
+                    statusMessage.textContent = successMessage;
+                })
+                .catch((error) => {
+                    statusMessage.textContent = errorMessage;
+                    console.error(error);
+                });
         });
 
-        const postData = (body, outputData, errorData) => {
-            const request = new XMLHttpRequest();
-            request.addEventListener('readystatechange', () => {
+        const postData = (body, body2, body3) => {
+            return fetch('./server.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body),
+                body2: JSON.stringify(body2),
+                body3: JSON.stringify(body3)
 
-                if (request.readyState !== 4) {
-                    return;
-                }
-                if (request.status === 200) {
-                    outputData();
-                } else {
-                    errorData(request.status);
-                }
             });
-            request.open('POST', './server.php');
-            request.setRequestHeader('Content-Type', 'application/json');
-            request.send(JSON.stringify(body));
+            // return new Promise((resolve, reject) => {
+            //     const request = new XMLHttpRequest();
+            //     request.addEventListener('readystatechange', () => {
 
+            //         if (request.readyState !== 4) {
+            //             return;
+            //         }
+            //         if (request.status === 200) {
+            //             resolve();
+            //         } else {
+            //             reject(request.status);
+            //         }
+            //     });
+            //     request.open('POST', './server.php');
+            //     request.setRequestHeader('Content-Type', 'application/json');
+            //     request.send(JSON.stringify(body));
+
+            // });
         };
         form.reset();
         form2.reset();
