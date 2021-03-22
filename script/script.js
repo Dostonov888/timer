@@ -398,17 +398,19 @@ window.addEventListener('DOMContentLoaded', function () {
 
         form.forEach((item) => {
 
-            form.addEventListener('submit', (event) => {
+            item.addEventListener('submit', (event) => {
                 event.preventDefault();
-                form.appendChild(statusMessage);
+                item.appendChild(statusMessage);
                 statusMessage.textContent = loadMessage;
                 const formData = new FormData(item);
+                let body = {};
+                formData.forEach((val, key) => {
+                    body[key] = val;
+                });
 
-                postData(formData)
+                postData(body)
                     .then((response) => {
-                        if (response.status !== 200) {
-                            throw new Error('status network not 200');
-                        }
+
                         statusMessage.textContent = successMessage;
 
                         let input = item.querySelectorAll('input');
