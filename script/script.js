@@ -406,6 +406,7 @@ window.addEventListener('DOMContentLoaded', function () {
                 let body = {};
                 formData.forEach((val, key) => {
                     body[key] = val;
+                    //body:'body';
                 });
 
                 postData(body)
